@@ -1,18 +1,20 @@
 #include <stdio.h>
+
 /**
- * main - Entry point 
- *
- * Description: using the main function
- * this program prints "Programming is positive, zero, or negative
- * Return: 0 (success)
+ *main - print 0123456789 using putchar
+ *Return: Always 0 (Success)
  */
+
 int main(void)
 {
-char c;
-for (c = '0'; c <= '9'; c++)
-{
-	putchar(c);
-}
-putchar('\n');
-return (0);
+	int n = '0';
+
+	while (n <= '9')
+	{
+		putchar(n);
+		n++;
+	}
+	putchar('\n');
+
+	return (0);
 }
