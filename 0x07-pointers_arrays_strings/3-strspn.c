@@ -1,23 +1,24 @@
-#include <stdio.h>
+#include "main.h"
 /**
- * _strchr - finds if char occurs in string
+ * _strspn - prints the consecutive caracters of s1 that are in s2.
+ * @s: source string
+ * @accept: searching string
  *
- * @s: string to check
- * @c: character to find in s
- *
- * Return: pointer to first instance of c, otherwise NULL
+ * Return: new string.
  */
-char *_strchr(char *s, char c)
+unsigned int _strspn(char *s, char *accept)
 {
-	int i = 0;
+	unsigned int i, j;
 
-	while (*(s + i))
+	for (j = 0; *(s + j); j++)
 	{
-		if (*(s + i) == c)
-			return (s + i);
-		i++;
+		for (i = 0; *(accept + i); i++)
+		{
+			if (*(s + j) == *(accept + i))
+				break;
+		}
+	if (*(accept + i) == '\0')
+		break;
 	}
-	if (*(s + i) == c)
-		return (s + i);
-	return (NULL);
+	return (j);
 }
