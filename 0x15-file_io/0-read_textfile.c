@@ -1,4 +1,6 @@
-#include "main.h"
+#include <unistd.h>
+#include <fcntl.h>
+#include <stdlib.h>
 
 /**
  * read_textfile - a function that reads a text file
@@ -6,39 +8,39 @@
  * @filename: the file name
  * @letters: the number of letters 
  * Return: the actual number of letters or 0 if fails
- **/
+ */
 
 ssize_t read_textfile(const char *filename,size_t letters)
 {
-	int f, length, i, res;
-	char *buffer;
+	int file;
+	int length, wrotechars;
+	char *buf;
 
-	if (filename == NULL)
+	if (filename == NULL || letters == 0)
 		return (0);
-	/* open */
-
-	f = open(filename, O_RDONLY);
-
-	if (f == -1)
+	buf = malloc(sizeof(char) * (letters));
+	if (buf == NULL)
 		return (0);
 
-	buffer = malloc(sizeof(char) *letters);
-	if (!buffer)
+	file = open(filename, O_RDONLY);
+	if (file == -1)
+	{
+		free(buf);
 		return (0);
-
-	read(f, buffer, letters);
-	buffer[letters] = '\0';
-
-	for (i = 0; buffer[i] != '\0'; i += 1)
-		length += 1;
-
-	res = close(f);
-	if (res != 0)
-		exit(-1);
-	res = write(STDOUT_FILENO, buffer, length);
-	if (res != length)
+	}
+	length = read(file, buf, letters);
+	if (lengt == -1)
+	{
+		free(buf);
+		close(file);
 		return (0);
-	free(buffer);
+	}
+	
+	wrotechars = write(STDOUT_FILENO, buf, length);
 
+free(buf);
+	close(file);
+	if (wrotechar != length)
+		return (0);
 	return (length);
 }	
