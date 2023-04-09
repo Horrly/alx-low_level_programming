@@ -1,46 +1,44 @@
-#include <unistd.h>
-#include <fcntl.h>
-#include <stdlib.h>
+#include "main.h"
 
 /**
- * read_textfile - prints text from a file
- *
- * @filename: name of the file
- * @letters: number of characters to read
- *
- * Return: actual number of letters read, 0 if end of file
- */
+* read_textfile - a function that reads a text file
+*and prints it to the POSIX standard output
+* @filename: the file name
+* @letters: the number of letters
+* Return: the actual number of letters or 0 if fails
+**/
+
 ssize_t read_textfile(const char *filename, size_t letters)
 {
-	int file;
-	int length, wrotechars;
-	char *buf;
+	int f, length, i, res;
+	char *buffer;
 
-	if (filename == NULL || letters == 0)
+	if (filename == NULL)
 		return (0);
-	buf = malloc(sizeof(char) * (letters));
-	if (buf == NULL)
+	/* open */
+
+	f = open(filename, O_RDONLY);
+
+	if (f == -1)
 		return (0);
 
-	file = open(filename, O_RDONLY);
-	if (file == -1)
-	{
-		free(buf);
+	buffer = malloc(sizeof(char) * letters);
+	if (!buffer)
 		return (0);
-	}
-	length = read(file, buf, letters);
-	if (length == -1)
-	{
-		free(buf);
-		close(file);
-		return (0);
-	}
 
-	wrotechars = write(STDOUT_FILENO, buf, length);
+	read(f, buffer, letters);
+	buffer[letters] = '\0';
 
-	free(buf);
-	close(file);
-	if (wrotechars != length)
+	for (i = 0; buffer[i] != '\0'; i += 1)
+		length += 1;
+
+	res = close(f);
+	if (res != 0)
+		exit(-1);
+	res = write(STDOUT_FILENO, buffer, length);
+	if (res != length)
 		return (0);
+	free(buffer);
+
 	return (length);
 }	
