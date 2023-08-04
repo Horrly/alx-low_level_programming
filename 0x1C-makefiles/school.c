@@ -1,11 +1,9 @@
 #include "m.h"
 
 /**
- * print_holberton - print the logo of Holberton
+ * just a simple project
  *
- * Return: Nothing
- *
- * Learn more: https://www.holbertonschool.com
+ * return nothing
  */
 void print_holberton(void)
 {
